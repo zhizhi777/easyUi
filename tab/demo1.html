@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tab选项卡</title>
+  <style>
+    .container{
+      max-width: 800px;
+      margin: 30px auto;
+      box-shadow: 0 0 3px 0px rgba(0, 0, 0, .3);
+      border-radius: 2px;
+      padding: 10px 15px;
+    }
+    .tabs h2{
+      margin: 10px 0;
+    }
+    .tabs .tab-head{
+      display: flex;
+      font-size: 14px;
+      line-height: 30px;
+      color: #6c6c6c;
+      border-bottom: 2px solid #d3d3d3;
+    }
+    .tabs .tab-item{
+      margin: 0 13px;
+      cursor: pointer;
+    }
+    .tabs .tab-item:first-child{
+      margin-left: 0px;
+    }
+    .tabs .tab-item.active{
+      color:#409eff;
+      border-bottom: 2px solid #409eff;
+      margin-bottom: -2px;
+    }
+    .tabs .tab-panel{
+      padding: 20px 0;
+      display: none;
+    }
+    .tabs .tab-panel.active{
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="tabs">
+      <h2>选项卡</h2>
+      <div class="tab-head">
+        <span class="tab-item active">用户管理</span>
+        <span class="tab-item">配置管理</span>
+        <span class="tab-item">角色管理</span>
+        <span class="tab-item">定时任务补偿</span>
+      </div>
+      <div class="tab-content">
+        <div class="tab-panel active">用户管理</div>
+        <div class="tab-panel">配置管理</div>
+        <div class="tab-panel">角色管理</div>
+        <div class="tab-panel">定时任务补偿</div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const $ = str => document.querySelector(str)
+    const $$ = str => document.querySelectorAll(str)
+    
+    const $$tabItem =  $$('.tabs .tab-item')
+    const $$tabPanel =  $$('.tabs .tab-panel')
+    $$tabItem.forEach($tab => {
+      $tab.onclick = function(){
+        $$tabItem.forEach($tab => $tab.classList.remove('active'))
+        this.classList.add('active')
+  
+        $$tabPanel.forEach($panel => $panel.classList.remove('active'))
+        $$tabPanel[[...$$tabItem].indexOf($tab)].classList.add('active')
+      }
+    });
+  </script>
+
+</body>
+
+</html>
