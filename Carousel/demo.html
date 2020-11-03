@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carousel</title>
+  <style>
+    .container{
+      max-width: 800px;
+      padding: 20px;
+      margin: 30px auto 0;
+      border-radius: 4px;
+      box-shadow: 0 0 4px 0 rgba(0, 0, 0, .3);
+    }
+    .carousel{
+     position: relative;
+    }
+    .carousel .panels{
+      height: 220px;
+
+    }
+    .carousel .panels > a{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .carousel .panels > a.active{
+      z-index: 1;
+    }
+    .carousel .panels > a:nth-child(2n){
+      background-color: pink;
+    }
+    .carousel .panels > a:nth-child(2n+1){
+      background-color: lightskyblue;
+    }
+    .carousel .arrow{
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(31,45,61,.11);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: all .3s;
+      z-index: 2;
+    }
+    .carousel:hover .arrow-pre{
+      opacity: 1;
+      transform: translateX(10px) translateY(-50%);
+    }
+    .carousel:hover .arrow-next{
+      opacity: 1;
+      transform: translateX(-10px) translateY(-50%);
+    }
+    .carousel .arrow::before{
+      content: '';
+      display: block;
+      width: 8px;
+      height: 8px;
+      border-left: 1px solid #000;
+      border-top: 1px solid #000;
+    }
+    .carousel .arrow-pre{
+      left: 0;
+    }
+    .carousel .arrow-next{
+      right: 0;
+    }
+    .carousel .arrow-pre::before{
+      transform: rotate(-45deg);
+    }
+    .carousel .arrow-next::before{
+      transform: rotate(135deg);
+    }
+    .carousel .indicators{
+      position: absolute;
+      left: 50%;
+      bottom: 10px;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+    .carousel .indicators span{
+      padding: 8px 0;
+      cursor: pointer;
+    }
+    .carousel .indicators span::before{
+      content: "";
+      width: 30px;
+      height: 3px;
+      margin-left: 4px;
+      border-radius: 4px;
+      display: block;
+      background-color: #c0c4cc;
+    }
+    .carousel .indicators span.active::before{
+      background-color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Carousel</h2>
+    <div class="carousel">
+      <div class="panels">
+        <a href="#0" class="active">0</a>
+        <a href="#1">1</a>
+        <a href="#2">2</a>
+        <a href="#3">3</a>
+      </div>
+      <div class="arrows">
+        <div class="arrow arrow-pre"></div>
+        <div class="arrow arrow-next"></div>
+      </div>
+      <div class="indicators">
+        <span class="active"></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <script>
+    const $ = s => document.querySelector(s)
+    const $$ = s => document.querySelectorAll(s)
+
+
+    const getIndex = () => [...$$('.carousel .panels > a')].indexOf($('.carousel .panels > a.active'))
+    const getPreIndex = () => (getIndex() - 1 + $$('.carousel .panels > a').length) % $$('.carousel .panels > a').length
+    const getNextIndex = () => (getIndex() + 1 + $$('.carousel .panels > a').length) % $$('.carousel .panels > a').length
+    
+    const setPanel = index => {
+       $$('.carousel .panels > a').forEach($panel => $panel.classList.remove('active'))
+      $$('.carousel .panels > a')[index].classList.add('active')
+    }
+    const setIndicator = index => {
+      $$('.carousel .indicators span').forEach($indicator => $indicator.classList.remove('active'))
+      $$('.carousel .indicators span')[index].classList.add('active')
+    }
+
+    $('.carousel .arrow-pre').onclick = function(){
+      let index = getPreIndex()
+      setPanel(index)
+      setIndicator(index)
+    }
+    $('.carousel .arrow-next').onclick = function(){
+      let index = getNextIndex()
+      setPanel(index)
+      setIndicator(index)
+    }
+    //foreach循环给每个小白块添加点击事件
+    // $$('.carousel .indicators span').forEach($indicator => {
+    //   $indicator.onclick = function(){
+    //   let index = [...$$('.carousel .indicators span')].indexOf(this)
+    //   setPanel(index)
+    //   setIndicator(index)
+    // }
+    // });
+    $$('.carousel .indicators span').forEach($indicator => $indicator.onclick = function(e) {
+      console.log(e)
+      console.log(e.target)
+      let index = [...$$('.carousel .indicators span')].indexOf(e.target)
+      setIndicator(index)
+      setPanel(index)
+    })
+
+
+    
+    //点击pre 显示上一面板 设置indicator
+    //点击next 显示下一面板 设置indicator
+    //点击indicators 显示对应面板 设置indicator
+  </script>
+</body>
+</html>

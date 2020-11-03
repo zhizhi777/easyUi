@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dialog</title>
+  <style>
+    .container{
+      max-width: 800px;
+      padding: 20px;
+      box-shadow: 0 0 4px 0 rgba(0, 0, 0, .3);
+      margin: 30px auto 0;
+      border-radius: 4px;
+    }
+    .button{
+      padding: 8px 12px;
+      border: 1px solid rgba(0, 0, 0, .3);
+      border-radius: 4px;
+      cursor: pointer;
+      outline: none;
+    }
+    .button:hover{
+      border-color: lightskyblue;
+      color: lightskyblue;
+    }
+    .button.primal{
+      background-color: lightskyblue;
+      color: #fff;
+      border: none;
+    }
+    .dialog{
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, .3);
+      display: none;
+    }
+    .dialog.show {
+      display: block;
+    }
+    .dialog .main{
+      padding: 20px;
+      border-radius: 4px;
+      background-color: #fff;
+      width: 500px;
+      margin: 30px auto 0;
+      transition: all .3s;
+    }
+    .dialog.show .main{
+      transform: translateY(calc(-30px - 100%));
+    }
+    .dialog.appear .main{
+      transform: translateY(30px);
+    }
+    .dialog .header{
+      display: flex;
+    }
+    .dialog .header .close{
+      margin-left: auto;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      display: inline-block;
+      width: 20px;
+      background-color: #fff;
+    }
+    .dialog .header .close::before,
+    .dialog .header .close::after{
+      content: '';
+      width: 10px;
+      height: 1px;
+      display: block;
+      position: absolute;
+      background-color: #000;
+      transform: rotate(45deg);
+    }
+    .dialog .header .close::after{
+      transform: rotate(-45deg);
+    }
+    .dialog .footer{
+      display: flex;
+      justify-content: flex-end;
+    }
+    .dialog .footer .btn-ok{
+      margin-left: 8px;
+    }
+    
+   
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Dialog</h2>
+    <button class="button btn-open-dialog">打开弹窗</button>
+    <div class="dialog">
+      <div class="main">
+        <div class="header">提示 <button class="close"></button></div>
+        <div class="content">
+          <p>这是一段消息</p>
+        </div>
+        <div class="footer">
+          <button class="button btn-cancel">取消</button>
+          <button class="button primal btn-ok">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    class Dialog{
+      constructor($root, options = {}){
+        this.$root = $root
+        this.options = options
+        this.onCancel = options.onCancel || {}
+        this.onOk = options.onOk || {}
+
+        this.bind()
+      }
+      bind(){
+        let _this = this
+        this.$root.querySelector('.btn-cancel').onclick = function(){
+          _this.hide()
+          _this.onCancel()
+        }
+        this.$root.querySelector('.close').onclick = function(){
+          _this.hide()
+          _this.onCancel()
+        }
+        this.$root.querySelector('.btn-ok').onclick = function(){
+          _this.hide()
+          _this.onOk()
+        }
+      }
+      show(){
+        this.$root.classList.add('show')
+        setTimeout(() => this.$root.classList.add('appear'))
+      }
+      hide(){
+        this.$root.classList.remove('appear')
+        setTimeout(() => this.$root.classList.remove('show'),400)
+      }
+    }
+   
+    let dialog = new Dialog(document.querySelector('.dialog'),{
+      onCancel(){
+        console.log("点击了取消")
+      },
+      onOk(){
+        console.log("点击了确定")
+      }
+    })
+    document.querySelector('.btn-open-dialog').onclick = function(){
+      dialog.show()
+    }
+  </script>
+</body>
+</html>
