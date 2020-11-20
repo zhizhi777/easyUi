@@ -12,6 +12,14 @@
       border-radius: 4px;
       box-shadow: 0 0 4px 0 rgba(0, 0, 0, .3);
     }
+    @media screen and (max-width: 600px){
+      .container{
+        padding: 10px;
+      }
+      h2{
+        margin: 10px 0;
+      }
+    }
     .carousel{
      position: relative;
      overflow: hidden;
@@ -19,6 +27,12 @@
     }
     .carousel .panels{
       height: 400px;
+    }
+    @media screen and (max-width: 600px){
+      .carousel .panels{
+        height: 25vh;
+      }
+      
     }
     .carousel .panels > a{
       width: 100%;
@@ -229,8 +243,9 @@
         this.$$panels = $root.querySelectorAll('.panels > a')
         this.$$indicators = $root.querySelectorAll('.indicators > span')
         this.animation = animation
-        this.defaultAnimation = animation
+        
         this.bind()
+        this.setTime()
       }
       bind(){
         this.$pre.onclick = () => {
@@ -238,20 +253,34 @@
           let toIndex = this.getPreIndex()
           this.setPanel(fromIndex, toIndex, 'left')
           this.setIndicator(toIndex)
+          clearInterval(this.time)
+          this.setTime()
         }
         this.$next.onclick = () =>{
           let fromIndex = this.getIndex()
           let toIndex = this.getNextIndex()
           this.setPanel(fromIndex, toIndex, 'right')
           this.setIndicator(toIndex)
+          clearInterval(this.time)
+          this.setTime()
         }
         this.$$indicators.forEach($indicator => $indicator.onclick = (e) => {
           let fromIndex = this.getIndex()
           let toIndex = [...this.$$indicators].indexOf(e.target)
           let direction = fromIndex > toIndex ? 'left':'right'
           this.setIndicator(toIndex)
-          this.setPanel(fromIndex, toIndex,direction)
+          this.setPanel(fromIndex, toIndex, direction)
+          clearInterval(this.time)
+          this.setTime()
         })
+      }
+      setTime(){
+        this.time = setInterval(() => {
+          let fromIndex = this.getIndex()
+          let toIndex = this.getNextIndex()
+          this.setPanel(fromIndex, toIndex, 'right')
+          this.setIndicator(toIndex)
+        }, 3000);
       }
       getIndex(){
         return [...this.$$indicators].indexOf(this.$root.querySelector('.indicators .active'))
@@ -263,7 +292,6 @@
         return (this.getIndex() + 1) % this.$$indicators.length
       }
       setPanel(fromIndex, toIndex, direction){
-        // console.log('setPage', arguments)
         this.animation(this.$$panels[fromIndex], this.$$panels[toIndex], direction)
       }
       setIndicator(index){
@@ -273,6 +301,7 @@
       setAnimation(animation){
         this.animation = animation
       }
+      
     }
     let $carousel = document.querySelector('.carousel')
     let carousel = new Carousel($carousel, Animation.slide)
