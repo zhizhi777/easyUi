@@ -1,5 +1,5 @@
 # easyUi
-一个由JavaScript，es6语法编写的简易element ui。
+一个基于JavaScript，es6实现的简易element ui。
 
 ## Carousel
 在有限空间内，循环播放同一类型的图片、文字等内容。包含三种动画效果，每隔3s会自动切换一张图。
