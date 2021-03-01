@@ -7,10 +7,10 @@
   <style>
     .countainer{
       max-width: 800px;
-      padding: 15px;
-      margin: 30px auto;
+      padding: 20px;
+      margin: 30px auto 0;
       border-radius: 4px;
-      box-shadow: 0 0 4px 0 rgba(0,0,0,.3);
+      box-shadow: 0 0 4px 0 rgba(0, 0, 0, .3);
     }
     .button{
       padding: 10px 15px;
@@ -110,9 +110,20 @@
     .show{
       display: block;
     }
+    .pages{
+      display: flex;
+      justify-content:space-between;
+    }
+    .pages a{
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
+  <div class="countainer pages">
+    <div>上一个:<a href="../tab/tab.html">tab（标签页）</a></div>
+    <div>下一个:<a href="../Carousel/Carousel.html">Carousel（走马灯）</a></div>
+  </div>
   <div class="countainer">
     <h2>Tooltip</h2>
     <div class="btn-group">
@@ -123,6 +134,7 @@
       <button class="button" >不</button>
     </div>
   </div>
+
 
 <script>
   const $ = s => document.querySelector(s)

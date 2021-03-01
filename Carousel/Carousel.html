@@ -46,6 +46,7 @@
     .carousel .panels > a img{
       width: 100%;
       height: auto;
+      -webkit-user-select: none;
     }
     /* .carousel .panels > a.active{
       z-index: 1;
@@ -127,9 +128,20 @@
     .carousel .indicators span.active::before{
       background-color: #fff;
     }
+    .pages{
+      display: flex;
+      justify-content:space-between;
+    }
+    .pages a{
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
+  <div class="container pages">
+    <div>上一个:<a href="../tooltip/tooltip.html">tooltip（文字提示）</a></div>
+    <div>下一个:<a href="../Collapse/Collapse.html">Collapse（折叠面板）</a></div>
+  </div>
   <div class="container">
     <h2>Carousel</h2>
     <div>
@@ -158,6 +170,9 @@
       </div>
     </div>
   </div>
+
+
+
   <script>
     const css = ($node, objcss) => Object.assign($node.style, objcss)
     const Animation = {

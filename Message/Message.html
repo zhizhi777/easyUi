@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1591966_u346be35l6.css">
   <title>Message</title>
   <style>
+    @import './iconfont.css';
     .countainer{
       max-width: 800px;
+      padding: 20px;
+      margin: 30px auto 0;
       border-radius: 4px;
-      padding: 15px;
-      margin: 30px auto;
-      box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 4px 0 rgba(0, 0, 0, .3);
     }
     .button{
       padding: 10px 16px;
@@ -59,9 +59,20 @@
     .message.danger{
       background-color: #F56C6C;
     }
+    .pages{
+      display: flex;
+      justify-content:space-between;
+    }
+    .pages a{
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
+  <div class="countainer pages">
+    <div>上一个:<a href="../Dialog/Dialog.html">Dialog（对话框）</a></div>
+    <div>下一个:<a href="../tab/tab.html">tab（标签页）</a></div>
+  </div>
   <div class="countainer">
     <h2>Message消息提示</h2>
     <div class="btn-group">
@@ -70,7 +81,10 @@
       <button id="btn-info" class="button" type="info" >消息</button>
       <button id="btn-danger" class="button" type="danger" >错误</button>
     </div>
+   
   </div>
+
+
   <script>
     const $ = s => document.querySelector(s)
     const $$ = s => document.querySelectorAll(s)
