@@ -129,8 +129,27 @@
       background-color: #fff;
     }
     .pages{
-      display: flex;
-      justify-content:space-between;
+      max-width: 800px;
+      padding: 20px;
+      margin: 30px auto 0;
+      border-radius: 4px;
+      box-shadow: 0 0 4px 0 rgba(0, 0, 0, .3);
+    }
+    @media screen and (min-width: 600px){
+      .pages{
+        display: flex;
+        justify-content:space-between;
+      }
+    }
+
+    @media screen and (max-width: 600px){
+      .pages{
+        display: flex;
+        flex-direction: column;
+      }
+      .pages div:first-child{
+        padding-bottom: 6px;
+      }
     }
     .pages a{
       text-decoration: none;

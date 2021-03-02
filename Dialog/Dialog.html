@@ -89,9 +89,21 @@
     .dialog .footer .btn-ok{
       margin-left: 8px;
     }
-    .pages{
-      display: flex;
-      justify-content:space-between;
+    @media screen and (min-width: 600px){
+      .pages{
+        display: flex;
+        justify-content:space-between;
+      }
+    }
+
+    @media screen and (max-width: 600px){
+      .pages{
+        display: flex;
+        flex-direction: column;
+      }
+      .pages div:first-child{
+        padding-bottom: 6px;
+      }
     }
     .pages a{
       text-decoration: none;
